@@ -10,6 +10,8 @@ import java.util.List;
 class OrderServiceTest {
 
   private OrderService underTest;
+  private final User alice = new User("Alice");
+  private final Item coffee = new Item(ItemType.COFFEE);
 
   @BeforeEach
   void setUp() {
@@ -59,8 +61,6 @@ class OrderServiceTest {
   @Test
   void placeOrderWhenValid() {
 
-    User alice = new User("Alice");
-    Item coffee = new Item(ItemType.COFFEE);
     Item unknown = new Item(ItemType.UNKNOWN);
     List<Example<List<String>>> examples = List.of(
       new Example<>(List.of("Alice", "COFFEE"),
@@ -83,9 +83,6 @@ class OrderServiceTest {
   @Test
   void listOrders() {
 
-    User alice = new User("Alice");
-    Item coffee = new Item(ItemType.COFFEE);
-
     Item cake = new Item(ItemType.CAKE);
     List<Example<List<String>>> examples = List.of(
       new Example<>(List.of("Alice", "COFFEE"),
@@ -106,6 +103,21 @@ class OrderServiceTest {
       new Order(2L, alice, List.of(coffee, coffee, cake))
     );
     var actual = underTest.listOrders();
+    Assertions.assertEquals(expected, actual);
+  }
+
+  @Test
+  void getOrderByIdWhenFound() {
+    var order = underTest.placeOrder("Alice", "Coffee");
+    var expected = List.of(order);
+    var actual = underTest.getOrderById(order.id());
+    Assertions.assertEquals(expected, actual);
+  }
+
+  @Test
+  void getOrderByIdWhenNotFound() {
+    var expected = List.of();
+    var actual = underTest.getOrderById(-1L);
     Assertions.assertEquals(expected, actual);
   }
 }

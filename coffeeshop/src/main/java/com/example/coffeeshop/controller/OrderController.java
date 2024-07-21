@@ -5,14 +5,11 @@ import com.example.coffeeshop.model.OrderRaw;
 import com.example.coffeeshop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api")
+@RestController
 public class OrderController {
 
   private final OrderService orderService;
@@ -23,10 +20,15 @@ public class OrderController {
   }
 
   @GetMapping(path = "/order",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Order> allOrders() {
     return orderService.listOrders();
+  }
+
+  @GetMapping(path = "/order/{id}",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Order> getOrderById(@PathVariable Long id) {
+    return orderService.getOrderById(id);
   }
 
   @PostMapping(path = "/order",

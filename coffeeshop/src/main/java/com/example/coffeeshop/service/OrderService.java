@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -18,13 +17,13 @@ public class OrderService {
   private final AtomicLong orderIds = new AtomicLong();
   private final UserService userService;
   private final ItemService itemService;
-  private final Map<Long, Order> ordersMap;
+  private final ConcurrentHashMap<Long, Order> ordersMap;
 
   @Autowired
   public OrderService(UserService userService, ItemService itemService) {
     this.userService = userService;
     this.itemService = itemService;
-    this.ordersMap = new HashMap<>();
+    this.ordersMap = new ConcurrentHashMap<>();
   }
 
   public User lookupUser(String name) {
@@ -53,4 +52,11 @@ public class OrderService {
     return order;
   }
 
+  public List<Order> getOrderById(Long id) {
+    Order order = ordersMap.get(id);
+    if (order != null) {
+      return List.of(order);
+    }
+    return List.of();
+  }
 }
