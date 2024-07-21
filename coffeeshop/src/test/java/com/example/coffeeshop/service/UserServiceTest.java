@@ -12,6 +12,12 @@ class UserServiceTest {
 
   private UserService underTest;
 
+  private final User alice = new User(1L, "Alice");
+  private final User bobbie = new User(2L, "Bobbie");
+  private final User charlie = new User(3L, "Charlie");
+  private final User dino = new User(4L, "Dino");
+  private final User eddie = new User(5L, "Eddie");
+
   @BeforeEach
   void setUp() {
     underTest = new UserService();
@@ -21,13 +27,13 @@ class UserServiceTest {
   void lookupUserWhenValidName() {
 
     List<Example<String>> examples = List.of(
-        new Example<>("Alice", new User("Alice")),
-        new Example<>("Alice", new User("Alice")),
-        new Example<>("alice", new User("Alice")),
-        new Example<>("BoBBie", new User("Bobbie")),
-        new Example<>("Charlie", new User("Charlie")),
-        new Example<>("Dino", new User("Dino")),
-        new Example<>("Eddie", new User("Eddie")));
+        new Example<>("Alice", alice),
+        new Example<>("Alice", alice),
+        new Example<>("alice", alice),
+        new Example<>("BoBBie", bobbie),
+        new Example<>("Charlie", charlie),
+        new Example<>("Dino", dino),
+        new Example<>("Eddie", eddie));
 
     examples.forEach(example -> {
       User actual = underTest.lookupUser(example.input()).orElseThrow();

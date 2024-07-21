@@ -10,6 +10,8 @@ import java.util.List;
 @Service
 public class ItemService {
 
+  private final EntityFactory creator = EntityFactory.INSTANCE;
+
   private final static List<String> NAMES = Arrays.stream(ItemType.values())
     .map(Enum::name).toList();
 
@@ -21,7 +23,7 @@ public class ItemService {
   }
 
   public Item getItem(String name) {
-    return new Item(getItemType(name));
+    return creator.createItem(getItemType(name));
   }
 
   public List<Item> getItems(List<String> names) {

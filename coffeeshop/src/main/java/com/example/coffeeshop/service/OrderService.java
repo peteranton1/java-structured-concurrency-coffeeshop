@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class OrderService {
 
   private final AtomicLong orderIds = new AtomicLong();
+
   private final UserService userService;
   private final ItemService itemService;
   private final ConcurrentHashMap<Long, Order> ordersMap;
@@ -38,7 +39,6 @@ public class OrderService {
     User user = lookupUser(name);
     List<String> orderItemNames = Arrays.asList(order.split(","));
     List<Item> items = getItems(orderItemNames);
-
     return createOrder(user, items);
   }
 

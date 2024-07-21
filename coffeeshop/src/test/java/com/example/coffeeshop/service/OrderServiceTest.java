@@ -10,8 +10,11 @@ import java.util.List;
 class OrderServiceTest {
 
   private OrderService underTest;
-  private final User alice = new User("Alice");
-  private final Item coffee = new Item(ItemType.COFFEE);
+  private final User alice = new User(1L, "Alice");
+  private final Item coffee = new Item(1L, ItemType.COFFEE);
+  private final Item tea = new Item(2L, ItemType.TEA);
+  private final Item cake = new Item(3L, ItemType.CAKE);
+  private final Item unknown = new Item(4L, ItemType.UNKNOWN);
 
   @BeforeEach
   void setUp() {
@@ -24,13 +27,13 @@ class OrderServiceTest {
   void lookupUserWhenValidName() {
 
     List<Example<String>> examples = List.of(
-      new Example<>("Alice", new User("Alice")),
-      new Example<>("Alice", new User("Alice")),
-      new Example<>("alice", new User("Alice")),
-      new Example<>("BoBBie", new User("Bobbie")),
-      new Example<>("Charlie", new User("Charlie")),
-      new Example<>("Dino", new User("Dino")),
-      new Example<>("Eddie", new User("Eddie")));
+      new Example<>("Alice", alice),
+      new Example<>("Alice", alice),
+      new Example<>("alice", alice),
+      new Example<>("BoBBie", new User(2L,"Bobbie")),
+      new Example<>("Charlie", new User(3L,"Charlie")),
+      new Example<>("Dino", new User(4L,"Dino")),
+      new Example<>("Eddie", new User(5L,"Eddie")));
 
     examples.forEach(example -> {
       User actual = underTest.lookupUser(example.input());
@@ -42,14 +45,14 @@ class OrderServiceTest {
   void getItemsWhenValid() {
 
     List<Example<List<String>>> examples = List.of(
-      new Example<>(List.of("COFFEE"), List.of(new Item(ItemType.COFFEE))),
-      new Example<>(List.of("Coffee"), List.of(new Item(ItemType.COFFEE))),
-      new Example<>(List.of("TEA"), List.of(new Item(ItemType.TEA))),
-      new Example<>(List.of("CAKE"), List.of(new Item(ItemType.CAKE))),
+      new Example<>(List.of("COFFEE"), List.of(coffee)),
+      new Example<>(List.of("Coffee"), List.of(coffee)),
+      new Example<>(List.of("TEA"), List.of(tea)),
+      new Example<>(List.of("CAKE"), List.of(cake)),
       new Example<>(List.of("COFFEE", "coffEE", "CaKE"),
-        List.of(new Item(ItemType.COFFEE), new Item(ItemType.COFFEE), new Item(ItemType.CAKE))),
+        List.of(coffee, coffee, cake)),
       new Example<>(List.of("", "BANANA"), List.of(
-        new Item(ItemType.UNKNOWN), new Item(ItemType.UNKNOWN)))
+        unknown, unknown))
     );
 
     examples.forEach(example -> {
@@ -61,14 +64,13 @@ class OrderServiceTest {
   @Test
   void placeOrderWhenValid() {
 
-    Item unknown = new Item(ItemType.UNKNOWN);
     List<Example<List<String>>> examples = List.of(
       new Example<>(List.of("Alice", "COFFEE"),
         new Order(1L, alice, List.of(coffee))),
       new Example<>(List.of("alice", "Coffee"),
         new Order(2L, alice, List.of(coffee))),
       new Example<>(List.of("Alice", "COFFEE,coffEE,CaKE"),
-        new Order(3L, alice, List.of(coffee, coffee, new Item(ItemType.CAKE)))),
+        new Order(3L, alice, List.of(coffee, coffee, cake))),
       new Example<>(List.of("aLICe", ",BANANA"),
         new Order(4L, alice, List.of(unknown, unknown)))
       );
@@ -83,7 +85,6 @@ class OrderServiceTest {
   @Test
   void listOrders() {
 
-    Item cake = new Item(ItemType.CAKE);
     List<Example<List<String>>> examples = List.of(
       new Example<>(List.of("Alice", "COFFEE"),
         new Order(1L, alice, List.of(coffee))),

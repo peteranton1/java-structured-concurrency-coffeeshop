@@ -12,6 +12,11 @@ import java.util.List;
 class ItemServiceTest {
   private ItemService underTest;
 
+  private final Item coffee = new Item(1L, ItemType.COFFEE);
+  private final Item tea = new Item(2L, ItemType.TEA);
+  private final Item cake = new Item(3L, ItemType.CAKE);
+  private final Item unknown = new Item(4L, ItemType.UNKNOWN);
+
   @BeforeEach
   void setUp() {
     underTest = new ItemService();
@@ -21,14 +26,14 @@ class ItemServiceTest {
   void getItemsWhenValid() {
 
     List<Example<List<String>>> examples = List.of(
-      new Example<>(List.of("COFFEE"), List.of(new Item(ItemType.COFFEE))),
-      new Example<>(List.of("Coffee"), List.of(new Item(ItemType.COFFEE))),
-      new Example<>(List.of("TEA"), List.of(new Item(ItemType.TEA))),
-      new Example<>(List.of("CAKE"), List.of(new Item(ItemType.CAKE))),
+      new Example<>(List.of("COFFEE"), List.of(coffee)),
+      new Example<>(List.of("Coffee"), List.of(coffee)),
+      new Example<>(List.of("TEA"), List.of(tea)),
+      new Example<>(List.of("CAKE"), List.of(cake)),
       new Example<>(List.of("COFFEE", "coffEE", "CaKE"),
-        List.of(new Item(ItemType.COFFEE), new Item(ItemType.COFFEE), new Item(ItemType.CAKE))),
+        List.of(coffee, coffee, cake)),
       new Example<>(List.of("", "BANANA"), List.of(
-        new Item(ItemType.UNKNOWN), new Item(ItemType.UNKNOWN)))
+        unknown, unknown))
     );
 
     examples.forEach(example -> {

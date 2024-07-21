@@ -12,13 +12,15 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
+  private final static EntityFactory creator = EntityFactory.INSTANCE;
+
   private final static List<String> NAMES = List.of(
     "Alice", "Bobbie", "Charlie", "Dino", "Eddie");
 
   private final static Map<String, User> USERS = initUsers();
 
   private static Map<String, User> initUsers() {
-    return NAMES.stream().map(User::new)
+    return NAMES.stream().map(creator::createUser)
       .collect(Collectors.toMap(u -> u.name().toUpperCase(), Function.identity()));
   }
 
