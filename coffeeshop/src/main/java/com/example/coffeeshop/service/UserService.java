@@ -1,4 +1,4 @@
-package com.example.coffeeshop.controller;
+package com.example.coffeeshop.service;
 
 import com.example.coffeeshop.model.User;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,15 @@ public class UserService {
 
   private static Map<String, User> initUsers() {
     return NAMES.stream().map(User::new)
-      .collect(Collectors.toMap(User::name, Function.identity()));
+      .collect(Collectors.toMap(u -> u.name().toUpperCase(), Function.identity()));
   }
 
   public Optional<User> lookupUser(String name) {
-    User user = USERS.get(name);
-    if (user != null) {
-      return Optional.of(user);
+    if(name != null) {
+      User user = USERS.get(name.toUpperCase());
+      if (user != null) {
+        return Optional.of(user);
+      }
     }
     return Optional.empty();
   }

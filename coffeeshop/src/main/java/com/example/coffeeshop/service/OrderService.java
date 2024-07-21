@@ -1,4 +1,4 @@
-package com.example.coffeeshop.controller;
+package com.example.coffeeshop.service;
 
 import com.example.coffeeshop.model.Item;
 import com.example.coffeeshop.model.Order;

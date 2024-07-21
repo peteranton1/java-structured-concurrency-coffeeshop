@@ -2,6 +2,7 @@ package com.example.coffeeshop.controller;
 
 import com.example.coffeeshop.model.Order;
 import com.example.coffeeshop.model.OrderRaw;
+import com.example.coffeeshop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

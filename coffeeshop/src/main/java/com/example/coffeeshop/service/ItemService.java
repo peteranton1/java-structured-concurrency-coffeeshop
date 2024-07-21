@@ -1,4 +1,4 @@
-package com.example.coffeeshop.controller;
+package com.example.coffeeshop.service;
 
 import com.example.coffeeshop.model.Item;
 import com.example.coffeeshop.model.ItemType;
@@ -25,7 +25,7 @@ public class ItemService {
   }
 
   public List<Item> getItems(List<String> names) {
-    return names.stream().map(this::getItem).toList();
+    return names.stream().map(String::toUpperCase).map(this::getItem).toList();
   }
 
 }
