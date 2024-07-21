@@ -1,2 +1,10 @@
-# java-structured-concurrency-coffeeshop
-Simple example of using Structured Concurrency with Project Loom and Java using a coffeeshop example. 
+# Java Structured Concurrency - Coffee Shop
+Simple project using 
+Structured Concurrency with Project Loom 
+and Java using a coffeeshop example.
+
+Compile using gradle, e.g.
+
+    ./gradlew build
+
+
