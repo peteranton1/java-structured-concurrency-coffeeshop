@@ -32,8 +32,8 @@ class ItemServiceTest {
     );
 
     examples.forEach(example -> {
-      var result = underTest.getItems(example.input());
-      Assertions.assertEquals(example.expected(), result);
+      var actual = underTest.getItems(example.input());
+      Assertions.assertEquals(example.expected(), actual);
     });
   }
 

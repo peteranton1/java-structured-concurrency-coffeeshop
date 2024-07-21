@@ -27,7 +27,7 @@ public class OrderService {
     this.ordersMap = new HashMap<>();
   }
 
-  public User getUser(String name) {
+  public User lookupUser(String name) {
     return userService.lookupUser(name).orElseThrow();
   }
 
@@ -36,7 +36,7 @@ public class OrderService {
   }
 
   public Order placeOrder(String name, String order) {
-    User user = getUser(name);
+    User user = lookupUser(name);
     List<String> orderItemNames = Arrays.asList(order.split(","));
     List<Item> items = getItems(orderItemNames);
 
@@ -44,7 +44,7 @@ public class OrderService {
   }
 
   public List<Order> listOrders() {
-    return (List<Order>) ordersMap.values();
+    return ordersMap.values().stream().toList();
   }
 
   private Order createOrder(User user, List<Item> items) {
