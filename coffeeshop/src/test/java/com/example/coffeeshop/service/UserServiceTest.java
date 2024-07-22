@@ -58,5 +58,38 @@ class UserServiceTest {
     });
   }
 
+  @Test
+  void lookupUserByIdWhenValidId() {
+
+    List<User> expected = List.of(
+      alice,
+      bobbie,
+      charlie,
+      dino,
+      eddie);
+
+    List<User> actual = underTest.listAllUsers();
+    Assertions.assertTrue(
+      actual.size() == expected.size()
+        && actual.containsAll(expected)
+        && expected.containsAll(actual));
+  }
+
+  @Test
+  void findUserByIdWhenValidId() {
+
+    List<Example<Long>> examples = List.of(
+      new Example<>(alice.id(), alice),
+      new Example<>(bobbie.id(), bobbie),
+      new Example<>(charlie.id(), charlie),
+      new Example<>(dino.id(), dino),
+      new Example<>(eddie.id(), eddie));
+
+    examples.forEach(example -> {
+      User actual = underTest.findUserById(example.input()).orElseThrow();
+      Assertions.assertEquals(example.expected(), actual);
+    });
+  }
+
 
 }

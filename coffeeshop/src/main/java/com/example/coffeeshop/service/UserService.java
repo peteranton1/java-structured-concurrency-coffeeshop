@@ -25,12 +25,20 @@ public class UserService {
   }
 
   public Optional<User> lookupUser(String name) {
-    if(name != null) {
+    if (name != null) {
       User user = USERS.get(name.toUpperCase());
       if (user != null) {
         return Optional.of(user);
       }
     }
     return Optional.empty();
+  }
+
+  public List<User> listAllUsers() {
+    return USERS.values().stream().toList();
+  }
+
+  public Optional<User> findUserById(long userId) {
+    return USERS.values().stream().filter(u -> u.id() == userId).findAny();
   }
 }
