@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -52,11 +53,7 @@ public class OrderService {
     return order;
   }
 
-  public List<Order> getOrderById(Long id) {
-    Order order = ordersMap.get(id);
-    if (order != null) {
-      return List.of(order);
-    }
-    return List.of();
+  public Optional<Order> getOrderById(Long id) {
+    return Optional.ofNullable(ordersMap.get(id));
   }
 }

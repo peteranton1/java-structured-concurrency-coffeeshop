@@ -6,15 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 class OrderServiceTest {
 
-  private OrderService underTest;
   private final User alice = new User(1L, "Alice");
   private final Item coffee = new Item(1L, ItemType.COFFEE);
   private final Item tea = new Item(2L, ItemType.TEA);
   private final Item cake = new Item(3L, ItemType.CAKE);
   private final Item unknown = new Item(4L, ItemType.UNKNOWN);
+  private OrderService underTest;
 
   @BeforeEach
   void setUp() {
@@ -30,10 +31,10 @@ class OrderServiceTest {
       new Example<>("Alice", alice),
       new Example<>("Alice", alice),
       new Example<>("alice", alice),
-      new Example<>("BoBBie", new User(2L,"Bobbie")),
-      new Example<>("Charlie", new User(3L,"Charlie")),
-      new Example<>("Dino", new User(4L,"Dino")),
-      new Example<>("Eddie", new User(5L,"Eddie")));
+      new Example<>("BoBBie", new User(2L, "Bobbie")),
+      new Example<>("Charlie", new User(3L, "Charlie")),
+      new Example<>("Dino", new User(4L, "Dino")),
+      new Example<>("Eddie", new User(5L, "Eddie")));
 
     examples.forEach(example -> {
       User actual = underTest.lookupUser(example.input());
@@ -73,7 +74,7 @@ class OrderServiceTest {
         new Order(3L, alice, List.of(coffee, coffee, cake))),
       new Example<>(List.of("aLICe", ",BANANA"),
         new Order(4L, alice, List.of(unknown, unknown)))
-      );
+    );
 
     examples.forEach(example -> {
       List<String> input = example.input();
@@ -110,14 +111,14 @@ class OrderServiceTest {
   @Test
   void getOrderByIdWhenFound() {
     var order = underTest.placeOrder("Alice", "Coffee");
-    var expected = List.of(order);
+    var expected = Optional.of(order);
     var actual = underTest.getOrderById(order.id());
     Assertions.assertEquals(expected, actual);
   }
 
   @Test
   void getOrderByIdWhenNotFound() {
-    var expected = List.of();
+    var expected = Optional.empty();
     var actual = underTest.getOrderById(-1L);
     Assertions.assertEquals(expected, actual);
   }

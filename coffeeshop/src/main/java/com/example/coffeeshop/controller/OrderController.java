@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class OrderController {
@@ -27,7 +28,7 @@ public class OrderController {
 
   @GetMapping(path = "/order/{id}",
     produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Order> getOrderById(@PathVariable Long id) {
+  public Optional<Order> getOrderById(@PathVariable Long id) {
     return orderService.getOrderById(id);
   }
 

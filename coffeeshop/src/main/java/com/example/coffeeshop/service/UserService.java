@@ -25,13 +25,7 @@ public class UserService {
   }
 
   public Optional<User> lookupUser(String name) {
-    if (name != null) {
-      User user = USERS.get(name.toUpperCase());
-      if (user != null) {
-        return Optional.of(user);
-      }
-    }
-    return Optional.empty();
+    return Optional.ofNullable(USERS.get(name.toUpperCase()));
   }
 
   public List<User> listAllUsers() {
