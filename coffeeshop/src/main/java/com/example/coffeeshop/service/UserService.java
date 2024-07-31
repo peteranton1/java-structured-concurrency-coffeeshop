@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,8 @@ public class UserService {
   }
 
   public Optional<User> lookupUser(String name) {
-    return Optional.ofNullable(USERS.get(name.toUpperCase()));
+    String key = (name == null ? UUID.randomUUID().toString() : name.toUpperCase());
+    return Optional.ofNullable(USERS.get(key));
   }
 
   public List<User> listAllUsers() {

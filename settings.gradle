@@ -17,4 +17,4 @@ plugins {
 }
 
 rootProject.name = 'java-structured-concurrency-coffeeshop'
-include('coffeeshop', 'app', 'list', 'utilities')
+include('coffeeshop', 'methodsecurity', 'app', 'list', 'utilities')
